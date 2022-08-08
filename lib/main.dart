@@ -1,3 +1,4 @@
+import 'package:designanddio/screens/login_screen.dart';
 import 'package:designanddio/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'consts/theme_consts.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: themeData,
       title: 'Material App',
-      home: SignUpScreen(),
+      home: LoginScreen(),
     );
   }
 }

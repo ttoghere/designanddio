@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:designanddio/config.dart';
 import 'package:designanddio/models/customer.dart';
+import 'package:designanddio/models/login_model.dart';
 import 'package:dio/dio.dart';
 
 class APIService {
@@ -25,13 +26,42 @@ class APIService {
       );
 
       if (response.statusCode == 201) {
+        print("Successful");
         ret = true;
       }
     } on DioError catch (error) {
       if (error.response!.statusCode == 404) {
+        print("Error: $error");
         ret = false;
-      } 
+      } else {
+        print("Error: $error");
+        ret = false;
+      }
     }
     return ret;
+  }
+
+  Future<LoginModel> loginCustomer(String username, String password) async {
+    late LoginModel model;
+    try {
+      var response = await Dio().post(
+        Config.tokenUrl,
+        data: {
+          "username": username,
+          "password": password,
+        },
+        options: Options(
+          headers: {
+            HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded"
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        model = LoginModel.fromJson(response.data);
+      }
+    } catch (error) {
+      print(error.toString());
+    }
+    return model;
   }
 }

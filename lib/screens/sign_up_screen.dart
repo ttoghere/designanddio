@@ -12,24 +12,16 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  late APIService apiService;
-  late CustomerModel model;
+  APIService apiService = APIService();
+  CustomerModel model = CustomerModel(
+    email: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+  );
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   bool hidePassword = true;
   bool isApiCallProcess = false;
-
-  @override
-  void initState() {
-    apiService = APIService();
-    model = CustomerModel(
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
-    );
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
