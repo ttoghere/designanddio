@@ -30,9 +30,7 @@ class APIService {
     } on DioError catch (error) {
       if (error.response!.statusCode == 404) {
         ret = false;
-      } else {
-        ret = false;
-      }
+      } 
     }
     return ret;
   }
