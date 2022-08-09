@@ -3,6 +3,6 @@ class Config {
   static String sKey = "cs_e87d633bced7669c85a4af02c205b2b7a67a4c16";
   static String url = "https://tunckankilic.site/wp-json/wc/v3/";
   static String cUrl = "customers";
-  static String tokenUrl =
-      "https://tunckankilic.site/wp-json/jwt-auth/v1/token";
+  static String tokenUrl = "https://tunckankilic.site/login";
+  static String categoriesUrl = "${url}products/categories";
 }

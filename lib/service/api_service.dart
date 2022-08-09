@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:designanddio/config.dart';
+import 'package:designanddio/models/category.dart';
 import 'package:designanddio/models/customer.dart';
 import 'package:designanddio/models/login_model.dart';
 import 'package:dio/dio.dart';
@@ -42,7 +43,7 @@ class APIService {
   }
 
   Future<LoginModel> loginCustomer(String username, String password) async {
-    late LoginModel model;
+    LoginModel model = LoginModel.fromJson({});
     try {
       var response = await Dio().post(
         Config.tokenUrl,
@@ -51,6 +52,8 @@ class APIService {
           "password": password,
         },
         options: Options(
+          followRedirects: false,
+          validateStatus: (status) => status! < 500,
           headers: {
             HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded"
           },
@@ -63,5 +66,28 @@ class APIService {
       print(error.toString());
     }
     return model;
+  }
+
+  Future<List<Category>> getCategories() async {
+    List<Category> data = [];
+    try {
+      String url =
+          "${Config.categoriesUrl}?consumer_key=${Config.key}&consumer_secret=${Config.sKey}";
+      Response response = await Dio().get(
+        url,
+        options: Options(
+            headers: {HttpHeaders.contentTypeHeader: "application/json"}),
+      );
+      if (response.statusCode == HttpStatus.ok) {
+        data = (response.data as List)
+            .map(
+              (e) => Category.fromJson(e),
+            )
+            .toList();
+      }
+    } on DioError catch (error) {
+      print("Error: $error");
+    }
+    return data;
   }
 }

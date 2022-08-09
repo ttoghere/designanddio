@@ -1,3 +1,4 @@
+import 'package:designanddio/screens/home_screen.dart';
 import 'package:designanddio/service/api_service.dart';
 import 'package:designanddio/widgets/form_helper.dart';
 import 'package:designanddio/widgets/progress_hud.dart';
@@ -149,15 +150,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context,
                                           "WooCommerce App",
                                           "Login Successfull",
-                                          "Ok",
-                                          () {});
+                                          "Ok", () {
+                                        print(value);
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomeScreen()));
+                                        setState(() {
+                                          isApiCallProcess = false;
+                                        });
+                                      });
                                     } else {
                                       FormHelper.showMessage(
                                           context,
                                           "WooCommerce App",
                                           "Invalid Login",
-                                          "Ok",
-                                          () {});
+                                          "Ok", () {
+                                        Navigator.of(context).pop();
+                                        setState(() {
+                                          isApiCallProcess = false;
+                                        });
+                                      });
                                     }
                                   },
                                 );
